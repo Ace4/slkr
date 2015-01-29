@@ -3,8 +3,9 @@
 
 
     <string name="app_name">Slakr</string>
-    <string name="add_course">Add a Course</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="course_list">Course List</string>
+    <string name="add_course">Add Course</string>
+    <string name="course_details">Course Details</string>
 </resources>

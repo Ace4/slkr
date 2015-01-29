@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/add_course"
-    tools:context=".MainActivity$AddCourseFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/course_list_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapCharacters"
+        android:hint="Enter Course Department"
+        android:ems="10"
+        android:id="@+id/courseDept"
+      />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+
+        android:hint="Enter Course Number"
+        android:ems="10"
+        android:id="@+id/courseNum"
+        android:layout_gravity="center_horizontal" />
 
     <Button
-        android:layout_width="136dp"
-        android:layout_height="144dp"
-        android:drawableTop="@drawable/icon_plus"
-        android:onClick="blah"
-        android:layout_gravity="end|bottom" />
-
-</FrameLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENTER"
+        android:id="@+id/courseInfo"
+        android:onClick="finishActivity"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

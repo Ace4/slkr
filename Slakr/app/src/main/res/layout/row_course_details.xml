@@ -6,11 +6,10 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/courseDept"
-        android:layout_width="wrap_content"
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
         android:layout_height="100dp"
-        android:ems="3"
-        android:text="CS"
+        android:text="HW"
         android:textSize="50dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp" />
@@ -25,16 +24,16 @@
 
 
         <TextView
-            android:id="@+id/courseTitle"
+            android:id="@+id/assignmentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Course Title"
+            android:text="Assignment Name"
             android:textSize="19sp"
             android:textColor="#222222"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/courseGrade"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100%"
@@ -46,7 +45,7 @@
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="20 Nov 2013"
@@ -57,5 +56,6 @@
 
 
     </LinearLayout>
+
 
 </LinearLayout>
