@@ -1,0 +1,5 @@
+C:\Users\Aaron\Documents\GitHub\million_dollar_ideas\Slkr\app\build\intermediates\classes\debug
+C:\Users\Aaron\Documents\GitHub\million_dollar_ideas\Slkr\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-905c61fd281ebee4def76d6e77700de819e5a819.jar
+C:\Users\Aaron\Documents\GitHub\million_dollar_ideas\Slkr\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-2b3951e2ab16142117f1ceab0149a3d82394b4f4.jar
+C:\Users\Aaron\Documents\GitHub\million_dollar_ideas\Slkr\app\build\intermediates\pre-dexed\debug\classes-2325d80f98ce0041e06c0f5eeb01e4efaa7164a9.jar
+C:\Users\Aaron\Documents\GitHub\million_dollar_ideas\Slkr\app\build\intermediates\pre-dexed\debug\classes-2b2db6822fa5d0b2289a9e55e4e664a6acfd7594.jar
