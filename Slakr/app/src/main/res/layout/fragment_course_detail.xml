@@ -16,6 +16,7 @@
         android:layout_height="80dp"
         android:text="+"
         android:textSize="50dp"
+        android:onClick="addGrades"
         android:layout_gravity="right|bottom" />
 
 

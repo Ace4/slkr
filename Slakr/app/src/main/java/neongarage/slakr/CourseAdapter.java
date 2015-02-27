@@ -38,6 +38,10 @@ public class CourseAdapter extends ArrayAdapter {
         return count;
     }
 
+    public List<String> getValues(){
+        return items;
+    }
+
     @Override
     public Object getItem(int arg0) {
         return items.get(arg0);

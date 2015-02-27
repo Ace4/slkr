@@ -34,13 +34,32 @@ public class CourseListFragment extends ListFragment {
         return view;
     }
 
+    public void onSaveInstanceState(Bundle savedState) {
+
+        super.onSaveInstanceState(savedState);
+
+        List<String> values = courseAdapter.getValues();
+        String [] list = new String[values.size()];
+        list = values.toArray(list);
+        savedState.putStringArray("courses", list);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        for(int i=0; i < 5; i++){
-            courseList.add("CS "+ i +'0'+ i);
+        if (savedInstanceState != null) {
+            String[] values = savedInstanceState.getStringArray("courses");
+            if (values != null) {
+                for(int i=0; i < values.length; i++){
+                    courseList.add(values[i]);
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 5; i++) {
+                courseList.add("CS " + i + '0' + i);
+            }
         }
 
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courseList);

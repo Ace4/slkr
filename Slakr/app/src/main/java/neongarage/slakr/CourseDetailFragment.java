@@ -3,6 +3,7 @@ package neongarage.slakr;
 /**
  * Created by Aaron on 1/22/2015.
  */
+import android.content.Intent;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.os.Bundle;
@@ -54,6 +55,8 @@ public class CourseDetailFragment extends ListFragment {
         Log.i("FragmentList", "Item clicked: " + id);
         TextView t = (TextView) v.findViewById(R.id.assignmentTextView);
         t.setText(assignmentArray[(int)id] + " completed");
+        Intent intent = new Intent(getActivity(), AddGradesActivity.class);
+        startActivity(intent);
     }
 
 
