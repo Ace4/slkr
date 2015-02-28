@@ -9,13 +9,14 @@
         android:hint="Enter Grade"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/itemGrade"
         android:layout_weight="1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enter"
+        android:onClick="finishActivity"
         android:id="@+id/enter_button" />
 
 

@@ -22,8 +22,7 @@ import android.widget.EditText;
  * Created by Aaron on 2/26/2015.
  */
 public class AddGradesActivity extends ActionBarActivity{
-    private EditText courseDept;
-    private EditText courseNum;
+    private EditText itemGrade;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,6 @@ public class AddGradesActivity extends ActionBarActivity{
                     .add(R.id.container, new AddGradesFragment())
                     .commit();
         }
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -62,13 +60,12 @@ public class AddGradesActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-/*    public void finishActivity(View view){
+    public void finishActivity(View view){
         Intent returnIntent = new Intent();
-        courseDept   = (EditText)findViewById(R.id.courseDept);
-        courseNum   =  (EditText)findViewById(R.id.courseNum);
-        returnIntent.putExtra("course_dept", courseDept.getText().toString());
-        returnIntent.putExtra("course_num", courseNum.getText().toString());
+        itemGrade = (EditText)findViewById(R.id.itemGrade);
+        returnIntent.putExtra("click_id", this.getIntent().getLongExtra("click_id", -1));
+        returnIntent.putExtra("item_grade", itemGrade.getText().toString());
         setResult(RESULT_OK, returnIntent);
         finish();
-    } */
+    }
 }

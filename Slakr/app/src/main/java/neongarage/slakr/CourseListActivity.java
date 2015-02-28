@@ -63,10 +63,9 @@ public class CourseListActivity extends ActionBarActivity {
         if (requestCode == NEW_COURSE_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                courseDept =data.getStringExtra("course_dept");
-                courseNum=data.getStringExtra("course_num");
-                Log.i("courseinfo","course department " + courseDept + courseNum);
-               CourseListFragment fragment = (CourseListFragment) getSupportFragmentManager().findFragmentByTag("courselist");
+                courseDept = data.getStringExtra("course_dept");
+                courseNum  = data.getStringExtra("course_num");
+                CourseListFragment fragment = (CourseListFragment) getSupportFragmentManager().findFragmentByTag("courselist");
                fragment.addCourse(courseDept, courseNum);
             }
         }
