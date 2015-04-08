@@ -30,15 +30,15 @@
         <activity
             android:name=".AddAssignmentActivity"
             android:label="@string/add_assignment"
-            android:parentActivityName=".CourseDetailActivity">
+            android:parentActivityName=".AssignmentListActivity">
         </activity>
         <activity
             android:name=".AddGradesActivity"
             android:label="@string/add_course"
-            android:parentActivityName=".CourseDetailActivity">
+            android:parentActivityName=".AssignmentListActivity">
         </activity>
         <activity
-            android:name=".CourseDetailActivity"
+            android:name=".AssignmentListActivity"
             android:label="@string/course_details"
             android:parentActivityName=".CourseListActivity">
         </activity>

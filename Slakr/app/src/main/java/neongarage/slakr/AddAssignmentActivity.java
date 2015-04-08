@@ -63,6 +63,7 @@ public class AddAssignmentActivity extends ActionBarActivity{
         assignmentSpinner = (Spinner)findViewById(R.id.assignmentSpinner);
         returnIntent.putExtra("item_name", assignmentName.getText().toString());
         returnIntent.putExtra("item_grade", assignmentGrade.getText().toString());
+        returnIntent.putExtra("item_weight", "10.0");
         returnIntent.putExtra("item_type", assignmentSpinner.getSelectedItem().toString());
         setResult(RESULT_OK, returnIntent);
         finish();

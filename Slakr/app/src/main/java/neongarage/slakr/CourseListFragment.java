@@ -11,19 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CourseListFragment extends ListFragment {
     private ListView courseListView;
-    //private String[] courseArray ;
     private CourseAdapter courseAdapter;
     //The data to show
-    List<String> courseList = new ArrayList<String>();
+    List<Course> courses = new ArrayList<Course>();
     private View view;
 
     @Override
@@ -38,10 +35,10 @@ public class CourseListFragment extends ListFragment {
 
         super.onSaveInstanceState(savedState);
 
-        List<String> values = courseAdapter.getValues();
+/*        List<Course> values = courseAdapter.getValues();
         String [] list = new String[values.size()];
         list = values.toArray(list);
-        savedState.putStringArray("courses", list);
+        savedState.putParcelable("courses", values); */
     }
 
     @Override
@@ -51,24 +48,25 @@ public class CourseListFragment extends ListFragment {
         if (savedInstanceState != null) {
             String[] values = savedInstanceState.getStringArray("courses");
             if (values != null) {
-                for(int i=0; i < values.length; i++){
-                    courseList.add(values[i]);
-                }
+              /*  for(int i=0; i < values.length; i++){
+                    courses.add(values[i]);
+                }*/
             }
         }
         else {
             for (int i = 0; i < 3; i++) {
-                courseList.add("CS " + i + '0' + i);
+                Course newCourse = new Course("CS ", Integer.toString(i));
+                courses.add(newCourse);
             }
         }
 
-        courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courseList);
+        courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         setListAdapter(courseAdapter);
      }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.i("FragmentList", "Item clicked: " + id);
-        Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
+        Intent intent = new Intent(getActivity(), AssignmentListActivity.class);
         startActivity(intent);
     }
 
@@ -79,11 +77,10 @@ public class CourseListFragment extends ListFragment {
         return planet;
     }
 
-    public void addCourse(String courseDept, String courseNum){
+    public void addCourse(Course newCourse){
 
-        courseList.add(courseDept + " " + courseNum);
-        courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courseList);
-        //courseListView.setAdapter(courseAdapter);
+        courses.add(newCourse);
+        courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         courseAdapter.notifyDataSetChanged();
     }
 }

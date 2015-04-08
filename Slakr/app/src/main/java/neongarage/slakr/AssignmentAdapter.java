@@ -18,35 +18,29 @@ import java.util.Map;
  * Created by Aaron on 1/27/2015.
  */
 public class AssignmentAdapter extends ArrayAdapter {
-    List<String> items;
-    List<String> grades;
-    List<String> dates;
-    List<String> types;
+    List<Assignment> assignments;
     Activity context;
     int layoutId;
     private LayoutInflater inflater;
     private TextView mMockTextView;
 
-    public AssignmentAdapter(Activity context, int resource, List<String> items, List<String> grades, List<String> dates, List<String> types) {
-        super(context, resource, items);
+    public AssignmentAdapter(Activity context, int resource, List<Assignment> assignments) {
+        super(context, resource, assignments);
         this.layoutId = resource;
         this.context = context;
-        this.items = items;
-        this.grades = grades;
-        this.dates = dates;
-        this.types = types;
+        this.assignments = assignments;
         inflater = context.getWindow().getLayoutInflater();
     }
 
     @Override
     public int getCount() {
-        int count = items.size();
+        int count = assignments.size();
         return count;
     }
 
     @Override
     public Object getItem(int arg0) {
-        return items;
+        return assignments;
     }
 
     @Override
@@ -59,16 +53,17 @@ public class AssignmentAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if(v == null){
+            Assignment current = assignments.get(position);
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(layoutId, null);
             TextView title = (TextView) v.findViewById(R.id.assignment_name);
-            title.setText(items.get(position));
+            title.setText(current.getName());
             TextView grade = (TextView) v.findViewById(R.id.assignment_grade);
-            grade.setText(grades.get(position));
+            grade.setText(Float.toString(current.getGrade()) + '%');
             TextView date = (TextView) v.findViewById(R.id.assignment_date);
-            date.setText(dates.get(position));
+            date.setText(current.getDateModified());
             TextView type = (TextView) v.findViewById(R.id.assignment_type);
-            type.setText(types.get(position));
+            type.setText(current.getType());
         }
         return v;
     }

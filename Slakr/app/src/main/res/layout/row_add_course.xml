@@ -7,10 +7,10 @@
 
     <TextView
         android:id="@+id/courseDept"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="100dp"
         android:ems="3"
-        android:text="CS"
+        android:text="PHYS"
         android:textSize="50dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp" />

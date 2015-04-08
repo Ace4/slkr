@@ -18,13 +18,13 @@ import java.util.Map;
  * Created by Aaron on 1/27/2015.
  */
 public class CourseAdapter extends ArrayAdapter {
-    List<String> items;
+    List<Course> items;
     Activity context;
     int layoutId;
     private LayoutInflater inflater;
     private TextView mMockTextView;
 
-    public CourseAdapter(Activity context, int resource, List<String> items) {
+    public CourseAdapter(Activity context, int resource, List<Course> items) {
         super(context, resource, items);
         this.layoutId = resource;
         this.context = context;
@@ -38,7 +38,7 @@ public class CourseAdapter extends ArrayAdapter {
         return count;
     }
 
-    public List<String> getValues(){
+    public List<Course> getValues(){
         return items;
     }
 
@@ -57,15 +57,13 @@ public class CourseAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if(v == null){
+            Course current = items.get(position);
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(layoutId, null);
             TextView title = (TextView) v.findViewById(R.id.courseTitle);
-            title.setText(items.get(position));
-            String phrase = items.get(position);
-            String delims = "[ ]+";
-            String[] token = phrase.split(delims);
+            title.setText(current.getDept() + current.getNum());
             TextView dept = (TextView) v.findViewById(R.id.courseDept);
-            dept.setText(token[0]);
+            dept.setText(current.getDept());
         }
         return v;
     }

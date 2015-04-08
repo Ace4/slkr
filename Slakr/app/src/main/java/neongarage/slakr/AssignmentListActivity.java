@@ -3,32 +3,40 @@ package neongarage.slakr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 /**
- * Created by Aaron on 1/22/2015.
+ * Created by Aaron on 1/28/2015.
  */
-public class CourseListActivity extends ActionBarActivity {
-    static final int NEW_COURSE_REQUEST = 1;
-    private String courseDept;
-    private String courseNum;
+public class AssignmentListActivity extends ActionBarActivity{
+    static final int NEW_ASSIGNMENT_REQUEST = 2;
+    private String assignmentName;
+    private float assignmentGrade;
+    private String assignmentType;
+    private float assignmentWeight;
+    private int click_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CourseListFragment(), "course_list")
+                    .add(R.id.container, new AssignmentListFragment(), "course_detail")
                     .commit();
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public void addAssignment(View view) {
+        Intent intent = new Intent(this,AddAssignmentActivity.class);
+        startActivityForResult(intent, NEW_ASSIGNMENT_REQUEST);
+
+       }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -51,24 +59,37 @@ public class CourseListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void addCourse(View view) {
-        Intent intent = new Intent(this, AddCourseActivity.class);
-        startActivityForResult(intent, NEW_COURSE_REQUEST);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == NEW_COURSE_REQUEST) {
+
+
+        if (requestCode == NEW_ASSIGNMENT_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                courseDept = data.getStringExtra("course_dept");
-                courseNum  = data.getStringExtra("course_num");
-                Course newCourse = new Course(courseDept, courseNum);
-                CourseListFragment fragment = (CourseListFragment) getSupportFragmentManager().findFragmentByTag("course_list");
-               fragment.addCourse(newCourse);
+                assignmentName = data.getStringExtra("item_name");
+                assignmentGrade  = Float.valueOf(data.getStringExtra("item_grade"));
+                assignmentType = data.getStringExtra("item_type");
+                assignmentWeight = Float.valueOf(data.getStringExtra("item_weight"));
+              AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
+                Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, null);
+                fragment.addAssignment(newAssignment);
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

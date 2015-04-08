@@ -7,9 +7,9 @@
 
     <TextView
         android:id="@+id/assignment_type"
-        android:layout_width="100dp"
+        android:layout_width="125dp"
         android:layout_height="100dp"
-        android:text="HW"
+        android:text="TEST"
         android:textSize="50dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp" />
