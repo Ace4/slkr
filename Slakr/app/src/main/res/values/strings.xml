@@ -7,5 +7,14 @@
     <string name="action_settings">Settings</string>
     <string name="course_list">Course List</string>
     <string name="add_course">Add Course</string>
+    <string name="add_assignment">Add Assignment</string>
     <string name="course_details">Course Details</string>
+    <string-array name="assignment_types">
+        <item>HW</item>
+        <item>QUIZ</item>
+        <item>TEST</item>
+        <item>PROJ</item>
+        <item>LAB</item>
+    </string-array>
+
 </resources>

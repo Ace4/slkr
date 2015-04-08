@@ -6,43 +6,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * Created by Aaron on 1/28/2015.
  */
-public class CourseDetailActivity extends ActionBarActivity{
-    static final int NEW_ASSIGNMENT_REQUEST = 2;
-    private String assignmentName;
-    private String assignmentGrade;
-    private String assignmentType;
-    private int click_id;
-
+public class AddAssignmentActivity extends ActionBarActivity{
+    private EditText assignmentName;
+    private EditText assignmentGrade;
+    private Spinner assignmentSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CourseDetailFragment(), "course_detail")
+                    .add(R.id.container, new AddAssignmentFragment())
                     .commit();
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 
-    public void addAssignment(View view) {
-        Intent intent = new Intent(this,AddAssignmentActivity.class);
-        startActivityForResult(intent, NEW_ASSIGNMENT_REQUEST);
 
-       }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -59,35 +56,15 @@ public class CourseDetailActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-
-
-        if (requestCode == NEW_ASSIGNMENT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                assignmentName = data.getStringExtra("item_name");
-                assignmentGrade  = data.getStringExtra("item_grade");
-                assignmentType = data.getStringExtra("item_type");
-              CourseDetailFragment fragment = (CourseDetailFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
-                fragment.addAssignment(assignmentName, assignmentGrade, assignmentType);
-            }
-        }
+    public void finishActivity(View view){
+        Intent returnIntent = new Intent();
+        assignmentName   = (EditText)findViewById(R.id.assignmentName);
+        assignmentGrade  =  (EditText)findViewById(R.id.assignmentGrade);
+        assignmentSpinner = (Spinner)findViewById(R.id.assignmentSpinner);
+        returnIntent.putExtra("item_name", assignmentName.getText().toString());
+        returnIntent.putExtra("item_grade", assignmentGrade.getText().toString());
+        returnIntent.putExtra("item_type", assignmentSpinner.getSelectedItem().toString());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

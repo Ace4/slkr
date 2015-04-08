@@ -22,7 +22,7 @@ public class CourseListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_container);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CourseListFragment(), "courselist")
+                    .add(R.id.container, new CourseListFragment(), "course_list")
                     .commit();
         }
 
@@ -65,7 +65,7 @@ public class CourseListActivity extends ActionBarActivity {
             if (resultCode == RESULT_OK) {
                 courseDept = data.getStringExtra("course_dept");
                 courseNum  = data.getStringExtra("course_num");
-                CourseListFragment fragment = (CourseListFragment) getSupportFragmentManager().findFragmentByTag("courselist");
+                CourseListFragment fragment = (CourseListFragment) getSupportFragmentManager().findFragmentByTag("course_list");
                fragment.addCourse(courseDept, courseNum);
             }
         }

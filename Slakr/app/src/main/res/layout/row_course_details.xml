@@ -6,7 +6,7 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/imageView1"
+        android:id="@+id/assignment_type"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="HW"
@@ -24,7 +24,7 @@
 
 
         <TextView
-            android:id="@+id/assignmentTextView"
+            android:id="@+id/assignment_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Assignment Name"
@@ -33,7 +33,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/detail_grade"
+            android:id="@+id/assignment_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100%"
@@ -45,7 +45,7 @@
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/date_updated"
+            android:id="@+id/assignment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="20 Nov 2013"

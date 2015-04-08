@@ -26,11 +26,16 @@ import java.util.Map;
 
 public class CourseDetailFragment extends ListFragment {
     private ListView assignmentListView;
-    private String[] assignmentArray ;
+    private List<String> assignmentArray = new ArrayList<String>();
+    private List<String> dateArray = new ArrayList<String>();
+    private List<String> gradeArray = new ArrayList<String>();
+    private List<String> typeArray = new ArrayList<String>();
     private String itemGrade;
+    private String itemName;
     private AssignmentAdapter assignmentAdapter;
     private long id;
-    private static int NEW_GRADE_REQUEST = 1;
+    private static int UPDATE_GRADE_REQUEST = 1;
+    private static int NEW_ASSIGNMENT_REQUEST = 2;
     //The data to show
     List<Map<String, String>> coursesList = new ArrayList<Map<String, String>>();
     private View view;
@@ -47,30 +52,32 @@ public class CourseDetailFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        assignmentArray = new String[10];
-        for(int i=0; i < assignmentArray.length; i++){
-            assignmentArray[i] = "Assignment " + i;
+        for(int i=0; i < 3; i++){
+            assignmentArray.add("Assignment " + i);
+            gradeArray.add("100%");
+            String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+            dateArray.add(date);
+            typeArray.add("HW");
         }
 
-        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignmentArray);
+        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignmentArray, gradeArray, dateArray, typeArray);
         setListAdapter(assignmentAdapter);
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long click_id) {
         id = click_id;
         Log.i("FragmentList", "Item clicked: " + id);
-        TextView assignment = (TextView) v.findViewById(R.id.assignmentTextView);
+        TextView assignment = (TextView) v.findViewById(R.id.assignment_name);
         Intent intent = new Intent(getActivity(), AddGradesActivity.class);
         intent.putExtra("click_id", id);
-        startActivityForResult(intent, NEW_GRADE_REQUEST);
+        startActivityForResult(intent, UPDATE_GRADE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         long clickId = -1;
-        if (requestCode == NEW_GRADE_REQUEST) {
+        if (requestCode == UPDATE_GRADE_REQUEST) {
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
                 itemGrade = data.getStringExtra("item_grade");
@@ -79,25 +86,44 @@ public class CourseDetailFragment extends ListFragment {
                 addGrade(itemGrade, (long)id);
             }
         }
+        if (requestCode == NEW_ASSIGNMENT_REQUEST){
+            //check if assignment activity was successful
+            if (resultCode == Activity.RESULT_OK){
+                itemGrade = data.getStringExtra("item_grade");
+                itemName = data.getStringExtra("item_name");
+                //TODO add a new item to the list view but now go to bed
+                assignmentArray.add(itemName);
+                assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignmentArray, gradeArray, dateArray, typeArray);
+                assignmentAdapter.notifyDataSetChanged();
+            }
+        }
+
     }
 
+    public void addAssignment(String name, String grade, String type){
+        Log.i("GragmentList.addAssit", "Item Grade: " + name);
+        assignmentArray.add(name);
+        gradeArray.add(grade);
+        String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+        dateArray.add(date);
+        typeArray.add(type);
+        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignmentArray, gradeArray, dateArray, typeArray);
+        assignmentAdapter.notifyDataSetChanged();
+
+    }
     private void addGrade(String grade, long id){
         Log.i("FragmentList.addGrade", "Item grade: " + itemGrade + "ID: " + id);
-        String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+
         View v = this.getView();
         ListView lv =  (ListView)view.findViewById(android.R.id.list);
-        TextView gradeView = (TextView) lv.getChildAt((int)id - lv.getFirstVisiblePosition()).findViewById(R.id.detail_grade);
+        TextView gradeView = (TextView) lv.getChildAt((int)id - lv.getFirstVisiblePosition()).findViewById(R.id.assignment_grade);
         gradeView.setText(grade + '%');
-        TextView mdate = (TextView) lv.getChildAt((int)id - lv.getFirstVisiblePosition()).findViewById(R.id.date_updated);
+        String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+        TextView mdate = (TextView) lv.getChildAt((int)id - lv.getFirstVisiblePosition()).findViewById(R.id.assignment_date);
         mdate.setText(date);
         assignmentAdapter.notifyDataSetChanged();
     }
 
-    private void initList() {
-        // We populate the courses
-        coursesList.add(createCourse("course", "CS311"));
-        coursesList.add(createCourse("course", "CS411"));
-    }
 
     private HashMap<String, String> createCourse(String key, String name) {
 
@@ -108,7 +134,6 @@ public class CourseDetailFragment extends ListFragment {
 
     public void addCourseItem(){
 
-        initList();
         // We get the ListView component from the layout
         // This is a simple adapter that accepts as parameter
         // Context

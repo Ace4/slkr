@@ -57,15 +57,12 @@ public class CourseListFragment extends ListFragment {
             }
         }
         else {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 3; i++) {
                 courseList.add("CS " + i + '0' + i);
             }
         }
 
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courseList);
-        //ListView courseView = (ListView) getView().findViewById(R.id.courseList);
-        //courseView.setAdapter(courseAdapter);
-        //courseAdapter = new CourseAdapter(getActivity(), new String[10]);
         setListAdapter(courseAdapter);
      }
     @Override

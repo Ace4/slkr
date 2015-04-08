@@ -28,6 +28,11 @@
             android:parentActivityName=".CourseListActivity">
         </activity>
         <activity
+            android:name=".AddAssignmentActivity"
+            android:label="@string/add_assignment"
+            android:parentActivityName=".CourseDetailActivity">
+        </activity>
+        <activity
             android:name=".AddGradesActivity"
             android:label="@string/add_course"
             android:parentActivityName=".CourseDetailActivity">
