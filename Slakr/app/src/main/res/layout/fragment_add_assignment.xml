@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <EditText
         android:layout_width="wrap_content"
@@ -10,8 +11,7 @@
         android:inputType="textCapCharacters"
         android:hint="Enter Assignment Name"
         android:ems="10"
-        android:id="@+id/assignmentName"
-        />
+        android:id="@+id/assignmentName" />
 
     <EditText
         android:layout_width="match_parent"
@@ -21,6 +21,16 @@
         android:hint="Assignment Grade"
         android:ems="10"
         android:id="@+id/assignmentGrade"
+        android:layout_gravity="center_horizontal" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Assignment Weight"
+        android:ems="10"
+        android:id="@+id/assignmentWeight"
         android:layout_gravity="center_horizontal" />
 
     <Spinner

@@ -16,6 +16,7 @@ public class AssignmentListActivity extends ActionBarActivity{
     private float assignmentGrade;
     private String assignmentType;
     private float assignmentWeight;
+    private String assignmentDate;
     private int click_id;
 
     @Override
@@ -71,8 +72,9 @@ public class AssignmentListActivity extends ActionBarActivity{
                 assignmentGrade  = Float.valueOf(data.getStringExtra("item_grade"));
                 assignmentType = data.getStringExtra("item_type");
                 assignmentWeight = Float.valueOf(data.getStringExtra("item_weight"));
+                assignmentDate = data.getStringExtra("item_date");
               AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
-                Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, null);
+                Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, assignmentDate);
                 fragment.addAssignment(newAssignment);
             }
         }

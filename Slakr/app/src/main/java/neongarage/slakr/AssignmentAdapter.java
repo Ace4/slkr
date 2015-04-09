@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Map;
@@ -60,10 +63,33 @@ public class AssignmentAdapter extends ArrayAdapter {
             title.setText(current.getName());
             TextView grade = (TextView) v.findViewById(R.id.assignment_grade);
             grade.setText(Float.toString(current.getGrade()) + '%');
+
             TextView date = (TextView) v.findViewById(R.id.assignment_date);
             date.setText(current.getDateModified());
+
             TextView type = (TextView) v.findViewById(R.id.assignment_type);
             type.setText(current.getType());
+
+            TextView weight = (TextView) v.findViewById(R.id.assignment_weight);
+            weight.setText("Weight: " + current.getWeight() + "%");
+
+            SeekBar gradeSeekBar = (SeekBar) v.findViewById(R.id.assignment_grade_seekBar);
+            gradeSeekBar.setProgress(Math.round(current.getGrade()));
+            final TextView newGrade = (TextView) v.findViewById(R.id.assignment_grade);
+            gradeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                int progress = 0;
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                    progress = progresValue;
+                }@Override
+                 public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    newGrade.setText(progress + "%");
+                }
+            });
+
         }
         return v;
     }

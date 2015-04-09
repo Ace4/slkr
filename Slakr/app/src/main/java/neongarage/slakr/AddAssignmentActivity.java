@@ -8,7 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Aaron on 1/28/2015.
@@ -17,6 +22,7 @@ public class AddAssignmentActivity extends ActionBarActivity{
     private EditText assignmentName;
     private EditText assignmentGrade;
     private Spinner assignmentSpinner;
+    private EditText assignmentWeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +66,14 @@ public class AddAssignmentActivity extends ActionBarActivity{
         Intent returnIntent = new Intent();
         assignmentName   = (EditText)findViewById(R.id.assignmentName);
         assignmentGrade  =  (EditText)findViewById(R.id.assignmentGrade);
+        assignmentWeight = (EditText) findViewById(R.id.assignmentWeight);
         assignmentSpinner = (Spinner)findViewById(R.id.assignmentSpinner);
         returnIntent.putExtra("item_name", assignmentName.getText().toString());
         returnIntent.putExtra("item_grade", assignmentGrade.getText().toString());
-        returnIntent.putExtra("item_weight", "10.0");
+        returnIntent.putExtra("item_weight", assignmentWeight.getText().toString());
         returnIntent.putExtra("item_type", assignmentSpinner.getSelectedItem().toString());
+        String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+        returnIntent.putExtra("item_date", date);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
