@@ -25,15 +25,14 @@ import java.util.Map;
 public class AssignmentListFragment extends ListFragment {
     private ListView assignmentListView;
     private List<Assignment> assignments = new ArrayList<Assignment>();
-//    private List<String> dateArray = new ArrayList<String>();
-//    private List<String> gradeArray = new ArrayList<String>();
-//    private List<String> typeArray = new ArrayList<String>();
+    private MySQLiteHelper db;
     private String itemGrade;
     private String itemName;
     private AssignmentAdapter assignmentAdapter;
     private long id;
     private static int UPDATE_GRADE_REQUEST = 1;
     private static int NEW_ASSIGNMENT_REQUEST = 2;
+    private  Course c;
     //The data to show
     List<Map<String, String>> coursesList = new ArrayList<Map<String, String>>();
     private View view;
@@ -50,6 +49,9 @@ public class AssignmentListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+       c = (Course) getActivity().getIntent().getParcelableExtra("course");
+       db = new MySQLiteHelper(getActivity());
+       assignments = db.getAssignmentsForCourse(c);
        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
        setListAdapter(assignmentAdapter);
     }
@@ -93,6 +95,7 @@ public class AssignmentListFragment extends ListFragment {
     public void addAssignment(Assignment assignment){
         Log.i("FragmentList.addAssit", "Item Grade: " + assignment.getName());
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
+        db.addAssignment(assignment, c.getDept(), c.getNum());
         assignments.add(assignment);
         assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
         assignmentAdapter.notifyDataSetChanged();

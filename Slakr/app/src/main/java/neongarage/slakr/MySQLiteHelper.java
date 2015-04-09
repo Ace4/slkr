@@ -127,7 +127,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 c = new Course();
                 c.setDept(cursor.getString(0));
                 c.setNum(cursor.getString(1));
-
                 courses.add(c);
             } while (cursor.moveToNext());
 

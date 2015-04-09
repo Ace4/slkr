@@ -18,6 +18,7 @@ import java.util.List;
 
 public class CourseListFragment extends ListFragment {
     private ListView courseListView;
+    private MySQLiteHelper db;
     private CourseAdapter courseAdapter;
     //The data to show
     List<Course> courses = new ArrayList<Course>();
@@ -44,29 +45,17 @@ public class CourseListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            String[] values = savedInstanceState.getStringArray("courses");
-            if (values != null) {
-              /*  for(int i=0; i < values.length; i++){
-                    courses.add(values[i]);
-                }*/
-            }
-        }
-        else {
-            for (int i = 0; i < 3; i++) {
-                Course newCourse = new Course("CS ", Integer.toString(i));
-                courses.add(newCourse);
-            }
-        }
-
+        db = new MySQLiteHelper(getActivity());
+        courses = db.getAllCourses();
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         setListAdapter(courseAdapter);
+
      }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.i("FragmentList", "Item clicked: " + id);
         Intent intent = new Intent(getActivity(), AssignmentListActivity.class);
+        intent.putExtra("course", courses.get(position));
         startActivity(intent);
     }
 
@@ -78,8 +67,8 @@ public class CourseListFragment extends ListFragment {
     }
 
     public void addCourse(Course newCourse){
-
         courses.add(newCourse);
+        db.addCourse(newCourse);
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         courseAdapter.notifyDataSetChanged();
     }
