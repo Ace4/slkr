@@ -50,7 +50,7 @@ public class AssignmentListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-       assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignments);
+       assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
        setListAdapter(assignmentAdapter);
     }
     @Override
@@ -83,7 +83,7 @@ public class AssignmentListFragment extends ListFragment {
                 itemName = data.getStringExtra("item_name");
                 //TODO add a new item to the list view but now go to bed
                 //assignmentArray.add(itemName);
-                //assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignments);
+                //assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
                 //assignmentAdapter.notifyDataSetChanged();
             }
         }
@@ -94,7 +94,7 @@ public class AssignmentListFragment extends ListFragment {
         Log.i("FragmentList.addAssit", "Item Grade: " + assignment.getName());
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
         assignments.add(assignment);
-        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_course_details, assignments);
+        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
         assignmentAdapter.notifyDataSetChanged();
     }
 
