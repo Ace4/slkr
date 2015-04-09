@@ -46,6 +46,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // create course table
         db.execSQL(CREATE_COURSES_TABLE);
+        Log.d("SQLite: onCreate", "Created courses table");
 
         // SQL statement to create assignments table
         String CREATE_ASSIGNMENTS_TABLE = "CREATE TABLE assignments ( " + "name TEXT, "
@@ -56,6 +57,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // create assignments table
         db.execSQL(CREATE_ASSIGNMENTS_TABLE);
+        Log.d("SQLite: onCreate", "Created assignments table");
     }
 
     @Override
@@ -71,9 +73,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     public void addCourse(Course c) {
-        // for logging
-        Log.d("addCourse", c.getDept() + c.getNum());
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         // create ContentValues to add key "column"/value
@@ -83,11 +82,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // insert
         db.insert(TABLE_COURSES, null, values);
+        Log.d("SQLite: addCourse", c.getDept() + c.getNum());
 
         db.close();
     }
 
-    public void addAssignment(Assignment a) {
+    public void addAssignment(Assignment a, String department, String courseNumber) {
         // for logging
         Log.d("addAssignment", a.getName());
 
@@ -100,9 +100,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DATE, a.getDateModified());
         values.put(COLUMN_GRADE, a.getGrade());
         values.put(COLUMN_WEIGHT, a.getWeight());
+        values.put(COLUMN_DEPARTMENT, department);
+        values.put(COLUMN_NUMBER, courseNumber);
 
         // insert
         db.insert(TABLE_ASSIGNMENTS, null, values);
+        Log.d("SQLite: addAssignment", a.getName());
 
         db.close();
     }
@@ -130,6 +133,35 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         }
         return courses;
+    }
+
+    public List<Assignment> getAssignmentsForCourse(Course c) {
+        List<Assignment> assignments = new LinkedList<Assignment>();
+
+        // build the query
+        String query = "SELECT * FROM " + TABLE_ASSIGNMENTS + " WHERE " + COLUMN_NUMBER + " = '" + c.getNum() +
+                "' AND " + COLUMN_DEPARTMENT + " = '" + c.getDept() + "'";
+
+        // get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // go through each row and add to list
+        Assignment a = null;
+        if (cursor.moveToFirst()) {
+            do {
+                a = new Assignment();
+                a.setName(cursor.getString(0));
+                a.setType(cursor.getString(1));
+                a.setDateModified(cursor.getString(2));
+                a.setGrade(Float.parseFloat(cursor.getString(3)));
+                a.setWeight(Float.parseFloat(cursor.getString(4)));
+
+                assignments.add(a);
+            } while (cursor.moveToNext());
+
+        }
+        return assignments;
     }
 
     // delete single course

@@ -10,6 +10,7 @@ public class Assignment {
     float grade;
     float weight;
 
+    public Assignment() {};
 
     /** Assignment(String name, String type, float grade, float weight, String dateModified) **/
     public Assignment(String name, String type, float grade, float weight, String dateModified){
