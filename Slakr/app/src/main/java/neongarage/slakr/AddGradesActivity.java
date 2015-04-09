@@ -1,33 +1,41 @@
 package neongarage.slakr;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
-
-public class MainActivity extends ActionBarActivity {
-
+/**
+ * Created by Aaron on 1/28/2015.
+ */
+/**
+ * Created by Aaron on 2/26/2015.
+ */
+public class AddGradesActivity extends ActionBarActivity{
+    private EditText itemGrade;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_container);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new AddGradesFragment())
                     .commit();
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void courseList(View view){
-        Intent intent = new Intent(this, CourseListActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,19 +60,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+    public void finishActivity(View view){
+        Intent returnIntent = new Intent();
+        itemGrade = (EditText)findViewById(R.id.itemGrade);
+        returnIntent.putExtra("click_id", this.getIntent().getLongExtra("click_id", -1));
+        returnIntent.putExtra("item_grade", itemGrade.getText().toString());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 }

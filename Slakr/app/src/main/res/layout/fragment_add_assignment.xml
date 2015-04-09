@@ -8,20 +8,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapCharacters"
-        android:hint="Enter Course Department"
+        android:hint="Enter Assignment Name"
         android:ems="10"
-        android:id="@+id/courseDept"
-      />
+        android:id="@+id/assignmentName"
+        />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
 
-        android:hint="Enter Course Number"
+        android:hint="Assignment Grade"
         android:ems="10"
-        android:id="@+id/courseNum"
+        android:id="@+id/assignmentGrade"
         android:layout_gravity="center_horizontal" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/assignmentSpinner" />
 
     <Button
         android:layout_width="wrap_content"
