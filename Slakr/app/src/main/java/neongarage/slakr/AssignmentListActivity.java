@@ -12,11 +12,17 @@ import android.view.View;
  */
 public class AssignmentListActivity extends ActionBarActivity{
     static final int NEW_ASSIGNMENT_REQUEST = 2;
+    private MySQLiteHelper db;
     private String assignmentName;
     private float assignmentGrade;
     private String assignmentType;
     private float assignmentWeight;
+<<<<<<< HEAD
     private String assignmentDate;
+=======
+    Course c;
+    private Course assignmentCourse;
+>>>>>>> sqlite
     private int click_id;
 
     @Override
@@ -29,7 +35,6 @@ public class AssignmentListActivity extends ActionBarActivity{
                     .add(R.id.container, new AssignmentListFragment(), "course_detail")
                     .commit();
         }
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -64,7 +69,6 @@ public class AssignmentListActivity extends ActionBarActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
 
-
         if (requestCode == NEW_ASSIGNMENT_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
@@ -76,6 +80,7 @@ public class AssignmentListActivity extends ActionBarActivity{
               AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
                 Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, assignmentDate);
                 fragment.addAssignment(newAssignment);
+                db.addAssignment(newAssignment, c.getDept(), c.getNum());
             }
         }
     }
