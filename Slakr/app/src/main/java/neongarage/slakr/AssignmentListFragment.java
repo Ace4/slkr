@@ -26,6 +26,7 @@ public class AssignmentListFragment extends ListFragment {
     private ListView assignmentListView;
     private List<Assignment> assignments = new ArrayList<Assignment>();
     private MySQLiteHelper db;
+
     private String itemGrade;
     private String itemName;
     private AssignmentAdapter assignmentAdapter;
@@ -92,7 +93,7 @@ public class AssignmentListFragment extends ListFragment {
 
     }
 
-    public void addAssignment(Assignment assignment){
+    public void addAssignment(Assignment assignment, Course c){
         Log.i("FragmentList.addAssit", "Item Grade: " + assignment.getName());
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
         db.addAssignment(assignment, c.getDept(), c.getNum());

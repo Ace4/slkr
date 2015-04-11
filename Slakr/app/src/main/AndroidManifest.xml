@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="neongarage.slakr" >
+    package="neongarage.slakr">
 
     <application
         android:allowBackup="true"
@@ -28,10 +28,18 @@
             android:parentActivityName=".CourseListActivity">
         </activity>
         <activity
+            android:label="Course Summary"
+            android:parentActivityName=".CourseListActivity"
+            android:name=".CourseSummaryActivity">
+         </activity>
+    <activity android:name="org.achartengine.GraphicalActivity" />
+
+        <activity
             android:name=".AddAssignmentActivity"
             android:label="@string/add_assignment"
             android:parentActivityName=".AssignmentListActivity">
         </activity>
+
         <activity
             android:name=".AddGradesActivity"
             android:label="@string/add_course"

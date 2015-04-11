@@ -12,17 +12,15 @@ import android.view.View;
  */
 public class AssignmentListActivity extends ActionBarActivity{
     static final int NEW_ASSIGNMENT_REQUEST = 2;
+    private Course c;
     private MySQLiteHelper db;
     private String assignmentName;
     private float assignmentGrade;
     private String assignmentType;
     private float assignmentWeight;
-<<<<<<< HEAD
     private String assignmentDate;
-=======
-    Course c;
     private Course assignmentCourse;
->>>>>>> sqlite
+
     private int click_id;
 
     @Override
@@ -36,12 +34,12 @@ public class AssignmentListActivity extends ActionBarActivity{
                     .commit();
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        c = getIntent().getParcelableExtra("course");
     }
 
     public void addAssignment(View view) {
         Intent intent = new Intent(this,AddAssignmentActivity.class);
         startActivityForResult(intent, NEW_ASSIGNMENT_REQUEST);
-
        }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,10 +75,9 @@ public class AssignmentListActivity extends ActionBarActivity{
                 assignmentType = data.getStringExtra("item_type");
                 assignmentWeight = Float.valueOf(data.getStringExtra("item_weight"));
                 assignmentDate = data.getStringExtra("item_date");
-              AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
+                AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
                 Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, assignmentDate);
-                fragment.addAssignment(newAssignment);
-                db.addAssignment(newAssignment, c.getDept(), c.getNum());
+                fragment.addAssignment(newAssignment, c);
             }
         }
     }

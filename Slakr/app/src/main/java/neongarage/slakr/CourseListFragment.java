@@ -20,7 +20,6 @@ public class CourseListFragment extends ListFragment {
     private ListView courseListView;
     private MySQLiteHelper db;
     private CourseAdapter courseAdapter;
-    //The data to show
     List<Course> courses = new ArrayList<Course>();
     private View view;
 
@@ -35,11 +34,6 @@ public class CourseListFragment extends ListFragment {
     public void onSaveInstanceState(Bundle savedState) {
 
         super.onSaveInstanceState(savedState);
-
-/*        List<Course> values = courseAdapter.getValues();
-        String [] list = new String[values.size()];
-        list = values.toArray(list);
-        savedState.putParcelable("courses", values); */
     }
 
     @Override
@@ -49,12 +43,11 @@ public class CourseListFragment extends ListFragment {
         courses = db.getAllCourses();
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         setListAdapter(courseAdapter);
-
      }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.i("FragmentList", "Item clicked: " + id);
-        Intent intent = new Intent(getActivity(), AssignmentListActivity.class);
+        Intent intent = new Intent(getActivity(), CourseSummaryActivity.class);
         intent.putExtra("course", courses.get(position));
         startActivity(intent);
     }

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "neongarage.slakr"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -22,4 +22,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile group: 'org.achartengine', name: 'achartengine', version: '1.2.0'
 }

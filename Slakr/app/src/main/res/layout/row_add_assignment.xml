@@ -63,22 +63,21 @@
             android:textColor="#999999"
             android:textSize="12sp" />
 
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginRight="10dp"
-    android:gravity="right"
-    android:layout_weight="0.43">
-
-    <SeekBar
-        android:layout_width="fill_parent"
+        <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/assignment_grade_seekBar" />
-    </LinearLayout>
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:gravity="right"
+        android:layout_weight="0.43">
+
+        <SeekBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/assignment_grade_seekBar"
+            android:focusable="false"/>
+        </LinearLayout>
 
 </LinearLayout>

@@ -14,6 +14,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
+        }
         jcenter()
     }
 }
