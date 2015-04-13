@@ -6,6 +6,39 @@
     android:id="@+id/course_summary">
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/chart_buttons">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pie"
+            android:id="@+id/pie_chart"
+            android:onClick="addPieChart"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bar"
+            android:id="@+id/bar_chart"
+            android:onClick="addBarChart"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Line"
+            android:onClick="addLineChart"
+            android:id="@+id/line_graph" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:orientation="vertical"
@@ -13,37 +46,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/course_list">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pie"
-                android:id="@+id/pie_chart"
-                android:layout_gravity="center_horizontal" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bar"
-                android:id="@+id/bar_chart"
-                android:layout_gravity="center_horizontal" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Line"
-                android:id="@+id/line_graph" />
-
-        </LinearLayout>
+        android:layout_above="@+id/current_grade"
+        android:layout_below="@+id/chart_buttons">
 
     </LinearLayout>
 

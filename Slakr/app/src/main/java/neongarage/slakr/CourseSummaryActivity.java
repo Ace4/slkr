@@ -5,10 +5,13 @@ package neongarage.slakr;
  */
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
 import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
@@ -16,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CourseSummaryActivity extends ActionBarActivity {
@@ -37,6 +42,11 @@ public class CourseSummaryActivity extends ActionBarActivity {
     private MySQLiteHelper db;
     private Course mCourse;
     private List<Assignment> mAssignments;
+    private  GraphicalView mChartView;
+    Button pie;
+    Button bar;
+    Button line ;
+    Button course_list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +56,11 @@ public class CourseSummaryActivity extends ActionBarActivity {
         mCourse = getIntent().getParcelableExtra("course");
         mAssignments = db.getAssignmentsForCourse(mCourse);
 
-        Button pie = (Button) findViewById(R.id.pie_chart);
-        Button bar = (Button) findViewById(R.id.bar_chart);
-        Button line = (Button) findViewById(R.id.line_graph);
-        Button course_list = (Button) findViewById(R.id.course_list);
-        pie.getBackground().setColorFilter(0xFFff3d00, PorterDuff.Mode.MULTIPLY);
+        pie = (Button) findViewById(R.id.pie_chart);
+        bar = (Button) findViewById(R.id.bar_chart);
+        line = (Button) findViewById(R.id.line_graph);
+        course_list = (Button) findViewById(R.id.course_list);
+        pie.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
         pie.setTextColor(Color.WHITE);
         bar.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
         bar.setTextColor(Color.WHITE);
@@ -59,7 +69,6 @@ public class CourseSummaryActivity extends ActionBarActivity {
         course_list.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
         course_list.setTextColor(Color.WHITE);
 
-        addChart();
         setCurrentGrade();
     }
 
@@ -69,13 +78,17 @@ public class CourseSummaryActivity extends ActionBarActivity {
         double total_weight = 0;
         float grade;
         double total_grade = 0;
-        float final_grade = 0;
+        double final_grade = 0;
         for (int i = 0; i < mAssignments.size(); i++) {
-            weight = mAssignments.get(i).getWeight();
+            total_weight += mAssignments.get(i).getWeight() *.01;
+        }
+
+
+        for (int i = 0; i < mAssignments.size(); i++) {
             grade = mAssignments.get(i).getGrade();
-            total_weight = weight * .01;
-            total_grade =  grade * .01;
-            final_grade += total_grade * total_weight;
+            weight = mAssignments.get(i).getWeight();
+            final_grade += (grade * .01) * (weight *.01) / total_weight;
+
         }
 
         DecimalFormat twoDForm = new DecimalFormat("#.##");
@@ -90,59 +103,216 @@ public class CourseSummaryActivity extends ActionBarActivity {
         intent.putExtra("course", course);
         startActivity(intent);
     }
-    private void addChart(){
-        SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
-        renderer.setColor(Color.CYAN);
+
+    public void addBarChart(View view) {
+
+        pie.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
+        bar.getBackground().setColorFilter(0xFFff3d00, PorterDuff.Mode.MULTIPLY);
+        line.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
+
+        List<String> names = new ArrayList<String>();
+        // Creating an XYSeries for Income
+        XYSeries earnedSeries = new XYSeries("Earned");
+        XYSeries totalSeries = new XYSeries("Total");
+        // Adding data to Income and Expense Series
+        float maxWeight = 0;
+         for (int i = 0; i < mAssignments.size(); i++) {
+            earnedSeries.add(i, (mAssignments.get(i).getGrade() * mAssignments.get(i).getWeight() * .01));
+            totalSeries.add(i, mAssignments.get(i).getWeight());
+            if(mAssignments.get(i).getWeight() > maxWeight){
+            maxWeight = mAssignments.get(i).getWeight();
+            }
+         }
+
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        dataset.addSeries(earnedSeries);
+        dataset.addSeries(totalSeries);
+
+        // Creating XYSeriesRenderer to customize incomeSeries
+        XYSeriesRenderer earnedRenderer = new XYSeriesRenderer();
+        earnedRenderer.setColor(Color.rgb(228,26,28));
+        earnedRenderer.setFillPoints(true);
+        earnedRenderer.setLineWidth(2);
+        earnedRenderer.setDisplayChartValues(true);
+
+        // Creating XYSeriesRenderer to customize expenseSeries
+        XYSeriesRenderer totalRenderer = new XYSeriesRenderer();
+        totalRenderer.setColor(Color.rgb(55,126,184));
+        totalRenderer.setFillPoints(true);
+        totalRenderer.setLineWidth(2);
+        totalRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        for(int i = 0; i<mAssignments.size(); i++){
+            multiRenderer.addXTextLabel(i, mAssignments.get(i).getName());
+
+        }
+
+        // Adding incomeRenderer and expenseRenderer to multipleRenderer
+        // Note: The order of adding dataseries to dataset and renderers to multipleRenderer
+        // should be same
+        multiRenderer.addSeriesRenderer(earnedRenderer);
+        multiRenderer.addSeriesRenderer(totalRenderer);
+        multiRenderer.setBarSpacing(.2);
+        multiRenderer.setMarginsColor(Color.WHITE);
+        multiRenderer.setYAxisMin(0);
+        multiRenderer.setYAxisMax(maxWeight);
+
+        // Creating an intent to plot bar chart using dataset and multipleRenderer
+        LinearLayout layout = (LinearLayout) findViewById(R.id.chart_layout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        if(mChartView != null){
+            layout.removeView(mChartView);
+        }
+
+        mChartView = ChartFactory.getBarChartView(this, dataset, multiRenderer, BarChart.Type.DEFAULT);
+        mChartView.setLayoutParams(params);
+
+        layout.addView(mChartView);
+    }
+
+    public void addLineChart(View view) {
+
+        pie.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
+        bar.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
+        line.getBackground().setColorFilter(0xFFff3d00, PorterDuff.Mode.MULTIPLY);
+
+        List<String> names = new ArrayList<String>();
+        // Creating an XYSeries for Income
+        XYSeries earnedSeries = new XYSeries("Earned");
+        XYSeries passingLine = new XYSeries("70 %");
+        // Adding data to Income and Expense Series
+        for (int i = 0; i < mAssignments.size(); i++) {
+            earnedSeries.add(i, (mAssignments.get(i).getGrade()));
+            passingLine.add(i, 70);
+        }
+
+
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        dataset.addSeries(earnedSeries);
+       dataset.addSeries(passingLine);
+
+        // Creating XYSeriesRenderer to customize incomeSeries
+        XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
+        incomeRenderer.setColor(Color.rgb(55,126,184));
+        incomeRenderer.setFillPoints(true);
+        incomeRenderer.setLineWidth(5);
+        incomeRenderer.setDisplayChartValues(true);
+
+        // Creating XYSeriesRenderer to customize expenseSeries
+        XYSeriesRenderer passingRenderer = new XYSeriesRenderer();
+        passingRenderer.setColor(Color.rgb(228,26,28));
+        passingRenderer.setFillPoints(true);
+        passingRenderer.setLineWidth(5);
+        passingRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        for(int i = 0; i<mAssignments.size(); i++){
+            multiRenderer.addXTextLabel(i, mAssignments.get(i).getName());
+
+        }
+
+        // Adding incomeRenderer and expenseRenderer to multipleRenderer
+        // Note: The order of adding dataseries to dataset and renderers to multipleRenderer
+        // should be same
+        multiRenderer.addSeriesRenderer(incomeRenderer);
+        multiRenderer.addSeriesRenderer(passingRenderer);
+        multiRenderer.setBarSpacing(.2);
+        multiRenderer.setMarginsColor(Color.WHITE);
+        multiRenderer.setLegendTextSize(20);
+        multiRenderer.setYAxisMin(0);
+        multiRenderer.setYAxisMax(100);
+
+        // Creating an intent to plot bar chart using dataset and multipleRenderer
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.chart_layout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        if(mChartView != null){
+            layout.removeView(mChartView);
+        }
+        mChartView = ChartFactory.getLineChartView(this, dataset, multiRenderer);
+        mChartView.setLayoutParams(params);
+        layout.addView(mChartView);
+
+    }
+
+    public void addPieChart(View view){
+
+
+        pie.getBackground().setColorFilter(0xFFff3d00, PorterDuff.Mode.MULTIPLY);
+        bar.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
+        line.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
         // Instantiating a renderer for the Pie Chart
         DefaultRenderer defaultRenderer  = new DefaultRenderer();
-        XYSeriesRenderer xySeriesRenderer = new XYSeriesRenderer();
-        XYMultipleSeriesDataset xyMultipleSeriesDataset = new XYMultipleSeriesDataset();
-
         // Pie Chart Section Value
-        List<Float> distribution = new ArrayList<Float>();
+        List<Double> distribution = new ArrayList<Double>();
+        double weighted_grade;
+        double points_missed = 0;
+        double total_weight = 0;
         for(int i=0; i < mAssignments.size(); i++){
-            distribution.add(mAssignments.get(i).getWeight());
+            weighted_grade =  mAssignments.get(i).getWeight() * mAssignments.get(i).getGrade() *.01;
+            total_weight  +=  mAssignments.get(i).getWeight();
+            points_missed += mAssignments.get(i).getWeight() - weighted_grade;
+            distribution.add(weighted_grade);
         }
+        distribution.add(points_missed);
 
         int[] colors = { Color.rgb(228,26,28), Color.rgb(55,126,184), Color.rgb(77,175,74), Color.rgb(152,78,163), Color.rgb(255,127,0),
                 Color.rgb(255,255,51), Color.rgb( 166,86,40)  };
 
 
-        SimpleSeriesRenderer seriesRenderer;
-        for(int i = 0 ;i<distribution.size();i++){
-            seriesRenderer = new SimpleSeriesRenderer();
+
+        for(int i = 0 ;i<distribution.size()-1;i++){
+            SimpleSeriesRenderer seriesRenderer = new SimpleSeriesRenderer();
             seriesRenderer.setColor(colors[i%7]);
             // Adding a renderer for a slice
             defaultRenderer.addSeriesRenderer(seriesRenderer);
-            xySeriesRenderer.setColor(colors[i%7]);
         }
+
+        SimpleSeriesRenderer seriesRenderer = new SimpleSeriesRenderer();
+        seriesRenderer.setColor(Color.GRAY);
+        // Adding a renderer for a slice
+        defaultRenderer.addSeriesRenderer(seriesRenderer);
+
 
         // Pie Chart Section Names
         List<String> code = new ArrayList<>();
+        double total_grade_earned = 0;
         for(int i = 0 ;i<mAssignments.size();i++){
-            code.add(mAssignments.get(i).getName() + ' ' + mAssignments.get(i).getWeight()+'%');
+            double temp = mAssignments.get(i).getWeight() * mAssignments.get(i).getGrade() *.01;
+            code.add(mAssignments.get(i).getName() + ' ' + temp + '/' + mAssignments.get(i).getWeight());
+   //         code.add(mAssignments.get(i).getName() + ' ' + mAssignments.get(i).getWeight());
         }
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        code.add("Points missed: " +  Double.valueOf(twoDForm.format(points_missed)) + '/' + total_weight );
 
-        CategorySeries distributionSeries = new CategorySeries(" Course Distribution");
+        CategorySeries distributionSeries = new CategorySeries("Course Distribution");
 
-        for(int i=0 ;i < distribution.size();i++){
+        for(int i=0 ;i < mAssignments.size()+1;i++){
             // Adding a slice with its values and name to the Pie Chart
             distributionSeries.add(code.get(i), distribution.get(i));
         }
 
 
+
         defaultRenderer.setLabelsTextSize(30);
         defaultRenderer.setShowAxes(true);
-        defaultRenderer.setShowLegend(false);
+        defaultRenderer.setFitLegend(true);
+        defaultRenderer.setShowLegend(true);
         defaultRenderer.setLegendTextSize(40);
         defaultRenderer.setLabelsColor(Color.BLACK);
         defaultRenderer.setZoomButtonsVisible(false);
         defaultRenderer.setPanEnabled(false);
-        GraphicalView mChartView = ChartFactory.getPieChartView(this, distributionSeries, defaultRenderer);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-        mChartView.setLayoutParams(params);
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.chart_layout);
+        if(mChartView != null) {
+            layout.removeView(mChartView);
+        }
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        mChartView = ChartFactory.getPieChartView(this, distributionSeries, defaultRenderer);
+        mChartView.setLayoutParams(params);
         layout.addView(mChartView);
     }
     @Override
