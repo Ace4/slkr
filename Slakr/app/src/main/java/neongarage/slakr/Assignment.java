@@ -12,17 +12,19 @@ public class Assignment implements Parcelable {
     String dateModified;
     float grade;
     float weight;
+    int completed; // 1 for completed, 0 for not completed
 
     public Assignment() {};
 
     /** Assignment(String name, String type, float grade, float weight, String dateModified) **/
-    public Assignment(String name, String type, float grade, float weight, String dateModified){
+    public Assignment(String name, String type, float grade, float weight, String dateModified, int completed){
         this.name = name;
         this.grade = grade;
         this.weight = weight;
         this.type = type;
 
         this.dateModified = dateModified;
+        this.completed = completed;
     }
 
     public void setName(String name){
@@ -65,6 +67,12 @@ public class Assignment implements Parcelable {
         return weight;
     }
 
+    public void setCompleted(int completed) {this.completed = completed;}
+
+    public int getCompleted() { return completed; }
+
+
+
 
     protected Assignment(Parcel in) {
         name = in.readString();
@@ -72,6 +80,7 @@ public class Assignment implements Parcelable {
         dateModified = in.readString();
         grade = in.readFloat();
         weight = in.readFloat();
+        completed = in.readInt();
     }
 
     @Override
@@ -86,6 +95,7 @@ public class Assignment implements Parcelable {
         dest.writeString(dateModified);
         dest.writeFloat(grade);
         dest.writeFloat(weight);
+        dest.writeInt(completed);
     }
 
     @SuppressWarnings("unused")

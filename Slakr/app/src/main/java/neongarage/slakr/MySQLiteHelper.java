@@ -24,6 +24,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "dateModified";
     private static final String COLUMN_GRADE = "grade";
     private static final String COLUMN_WEIGHT = "weight";
+    private static final String COLUMN_COMPLETED = "completed";
 
     // Course column names
     private static final String COLUMN_DEPARTMENT = "department";
@@ -51,7 +52,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         // SQL statement to create assignments table
         String CREATE_ASSIGNMENTS_TABLE = "CREATE TABLE assignments ( " + "name TEXT, "
                 + "type TEXT, " + "dateModified TEXT, " + "grade REAL, " + "weight REAL, " +
-                "department TEXT, " + "number TEXT, " +
+                "department TEXT, " + "number TEXT, " + "completed INTEGER, " +
                 "FOREIGN KEY(department) REFERENCES courses(department), " +
                 "FOREIGN KEY(number) REFERENCES courses(number))";
 
@@ -102,6 +103,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WEIGHT, a.getWeight());
         values.put(COLUMN_DEPARTMENT, department);
         values.put(COLUMN_NUMBER, courseNumber);
+        values.put(COLUMN_COMPLETED, a.getCompleted());
 
         // insert
         db.insert(TABLE_ASSIGNMENTS, null, values);
@@ -155,6 +157,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 a.setDateModified(cursor.getString(2));
                 a.setGrade(Float.parseFloat(cursor.getString(3)));
                 a.setWeight(Float.parseFloat(cursor.getString(4)));
+                a.setCompleted(Integer.parseInt(cursor.getString(5)));
 
                 assignments.add(a);
             } while (cursor.moveToNext());
