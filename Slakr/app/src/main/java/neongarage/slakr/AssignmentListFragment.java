@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -55,8 +58,27 @@ public class AssignmentListFragment extends ListFragment {
        assignments = db.getAssignmentsForCourse(c);
        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
        setListAdapter(assignmentAdapter);
+
+        SeekBar gradeSeekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        final TextView newGrade = (TextView) view.findViewById(R.id.desired_grade);
+        gradeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                progress = progresValue;
+            }@Override
+             public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                newGrade.setText(progress + "%");
+            }
+        });
+
+
     }
-    @Override
+
+        @Override
     public void onListItemClick(ListView l, View v, int position, long click_id) {
         id = click_id;
         Log.i("FragmentList", "Item clicked: " + id);
@@ -112,6 +134,7 @@ public class AssignmentListFragment extends ListFragment {
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
         TextView mdate = (TextView) lv.getChildAt((int)id - lv.getFirstVisiblePosition()).findViewById(R.id.assignment_date);
         mdate.setText(date);
+
         assignmentAdapter.notifyDataSetChanged();
     }
 

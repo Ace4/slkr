@@ -64,5 +64,7 @@ public class CourseListFragment extends ListFragment {
         db.addCourse(newCourse);
         courseAdapter = new CourseAdapter(getActivity(), R.layout.row_add_course, courses);
         courseAdapter.notifyDataSetChanged();
+
     }
+
 }

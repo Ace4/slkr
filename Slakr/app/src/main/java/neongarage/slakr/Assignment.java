@@ -10,19 +10,28 @@ public class Assignment implements Parcelable {
     String name;
     String type;
     String dateModified;
+    boolean completed;
     float grade;
     float weight;
 
     public Assignment() {};
 
     /** Assignment(String name, String type, float grade, float weight, String dateModified) **/
-    public Assignment(String name, String type, float grade, float weight, String dateModified){
+    public Assignment(String name, String type, float grade, float weight, String dateModified, boolean completed){
         this.name = name;
         this.grade = grade;
         this.weight = weight;
         this.type = type;
-
+        this.completed = completed;
         this.dateModified = dateModified;
+    }
+
+    public void setCompleted(Boolean completed){
+        this.completed = completed;
+    }
+
+    public boolean getCompleted(){
+        return this.completed;
     }
 
     public void setName(String name){
@@ -33,14 +42,10 @@ public class Assignment implements Parcelable {
         return name;
     }
 
+    public void setType(String type) { this.type = type; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public String getType() { return type; }
 
-    public String getType() {
-        return type;
-    }
     public void setDateModified(String dateModified){
         this.dateModified = dateModified;
     }
@@ -49,13 +54,9 @@ public class Assignment implements Parcelable {
         return dateModified;
     }
 
-    public void setGrade(float grade){
-        this.grade = grade;
-    }
+    public void setGrade(float grade){ this.grade = grade; }
 
-    public float getGrade(){
-        return grade;
-    }
+    public float getGrade(){ return grade; }
 
     public void setWeight(float weight){
         this.weight = weight;
@@ -72,6 +73,7 @@ public class Assignment implements Parcelable {
         dateModified = in.readString();
         grade = in.readFloat();
         weight = in.readFloat();
+        completed = (boolean) in.readValue(null);
     }
 
     @Override
@@ -86,6 +88,7 @@ public class Assignment implements Parcelable {
         dest.writeString(dateModified);
         dest.writeFloat(grade);
         dest.writeFloat(weight);
+        dest.writeValue(completed);
     }
 
     @SuppressWarnings("unused")

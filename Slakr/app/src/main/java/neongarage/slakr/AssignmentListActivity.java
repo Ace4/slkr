@@ -20,6 +20,7 @@ public class AssignmentListActivity extends ActionBarActivity{
     private float assignmentWeight;
     private String assignmentDate;
     private Course assignmentCourse;
+    private String assignmentCompleted;
 
     private int click_id;
 
@@ -34,6 +35,7 @@ public class AssignmentListActivity extends ActionBarActivity{
                     .commit();
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         c = getIntent().getParcelableExtra("course");
     }
 
@@ -41,6 +43,7 @@ public class AssignmentListActivity extends ActionBarActivity{
         Intent intent = new Intent(this,AddAssignmentActivity.class);
         startActivityForResult(intent, NEW_ASSIGNMENT_REQUEST);
        }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -75,8 +78,13 @@ public class AssignmentListActivity extends ActionBarActivity{
                 assignmentType = data.getStringExtra("item_type");
                 assignmentWeight = Float.valueOf(data.getStringExtra("item_weight"));
                 assignmentDate = data.getStringExtra("item_date");
+                assignmentCompleted = data.getStringExtra("item_completed");
+                boolean isCompleted = false;
+                if(assignmentCompleted.equals("True")){
+                    isCompleted = true;
+                }
                 AssignmentListFragment fragment = (AssignmentListFragment) getSupportFragmentManager().findFragmentByTag("course_detail");
-                Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, assignmentDate);
+                Assignment newAssignment = new Assignment(assignmentName, assignmentType, assignmentGrade, assignmentWeight, assignmentDate, isCompleted);
                 fragment.addAssignment(newAssignment, c);
             }
         }

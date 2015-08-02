@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:id="@+id/chart_buttons">
@@ -34,7 +34,16 @@
             android:layout_height="wrap_content"
             android:text="Line"
             android:onClick="addLineChart"
-            android:id="@+id/line_graph" />
+            android:id="@+id/line_graph">
+
+            </Button>
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/desired_grade_seekbar"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/current_grade"
+            android:layout_toEndOf="@+id/chart_buttons" />
 
     </LinearLayout>
 
@@ -49,12 +58,21 @@
         android:layout_above="@+id/current_grade"
         android:layout_below="@+id/chart_buttons">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Desired Grade"
+            android:id="@+id/desired_grade"
+            android:layout_alignBottom="@+id/chart_buttons"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Course List"
+        android:text="Assignment List"
         android:id="@+id/course_list"
         android:onClick="course_list_activity"
         android:layout_alignParentLeft="true"
@@ -75,6 +93,8 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:layout_above="@id/course_list"
         android:layout_centerHorizontal="true" />
+
+
 
 
 

@@ -9,7 +9,7 @@
         <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
         <item name="android:navigationBarColor">#37474f</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">#ff3d00</item>`
+        <item name="android:colorAccent">#ff3d00</item>
     </style>
 
     <style name="button" parent="@android:style/Widget.Button">

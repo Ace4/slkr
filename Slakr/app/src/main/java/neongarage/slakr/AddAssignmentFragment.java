@@ -32,6 +32,7 @@ public class AddAssignmentFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_assignment, container, false);
         setSpinnerContent(view);
+        setCompletedContent(view);
 
 /*        weightTextView = (TextView) view.findViewById(R.id.WeighTextView);
         weight = (SeekBar) view.findViewById(R.id.assignmentWeightSeekBar);
@@ -63,6 +64,13 @@ public class AddAssignmentFragment extends Fragment {
         Spinner spinner = (Spinner) view.findViewById(R.id.assignmentSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.assignment_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+    private void setCompletedContent(View view){
+        Spinner spinner = (Spinner) view.findViewById(R.id.assignmentCompleted);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.completed_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -58,7 +60,9 @@ public class AssignmentAdapter extends ArrayAdapter {
         if(v == null){
             Assignment current = assignments.get(position);
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(layoutId, null);
+
+            v = inflater.inflate(layoutId, parent, false);
+
             TextView title = (TextView) v.findViewById(R.id.assignment_name);
             title.setText(current.getName());
             TextView grade = (TextView) v.findViewById(R.id.assignment_grade);
@@ -73,14 +77,27 @@ public class AssignmentAdapter extends ArrayAdapter {
             TextView weight = (TextView) v.findViewById(R.id.assignment_weight);
             weight.setText("Weight: " + current.getWeight() + "%");
 
+            Switch assignmentSwitch = (Switch) v.findViewById(R.id.completed_switch);
+            assignmentSwitch.setChecked(current.getCompleted());
+            final Assignment temp = current;
+            assignmentSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                    temp.setCompleted(isChecked);
+            }
+        });
+            current.setCompleted(temp.getCompleted());
             SeekBar gradeSeekBar = (SeekBar) v.findViewById(R.id.assignment_grade_seekBar);
             gradeSeekBar.setProgress(Math.round(current.getGrade()));
             final TextView newGrade = (TextView) v.findViewById(R.id.assignment_grade);
             gradeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 int progress = 0;
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                    progress = progresValue;
+                public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                    progress = progressValue;
                 }@Override
                  public void onStartTrackingTouch(SeekBar seekBar) {
                 }

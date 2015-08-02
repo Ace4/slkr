@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="100dp"
     android:orientation="horizontal"
     android:weightSum="1">
 
     <TextView
         android:id="@+id/assignment_type"
         android:layout_width="125dp"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:text="TEST"
-        android:textSize="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
+        android:textSize="50dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:gravity="left"
-        android:layout_weight="0.43">
+        android:id="@+id/assignment_info"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/assignment_type">
 
 
         <TextView
             android:id="@+id/assignment_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assignment Name"
+            android:text="Name"
             android:textSize="19sp"
+            android:singleLine="true"
             android:textColor="#222222"
             android:textStyle="bold" />
 
@@ -37,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100%"
+            android:singleLine="true"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lines="1"
@@ -47,18 +47,20 @@
 
         <TextView
             android:id="@+id/assignment_weight"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Weight: 40%"
+            android:singleLine="true"
             android:layout_marginTop="5dp"
             android:textColor="#222222"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/assignment_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20 Nov 2013"
+            android:singleLine="true"
             android:layout_marginTop="5dp"
             android:textColor="#999999"
             android:textSize="12sp" />
@@ -67,17 +69,26 @@
 
         <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="89dp"
         android:orientation="vertical"
-        android:layout_marginRight="10dp"
-        android:gravity="right"
-        android:layout_weight="0.43">
+        android:id="@+id/assignment_controls"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
 
-        <SeekBar
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/assignment_grade_seekBar"
-            android:focusable="false"/>
+
+            <SeekBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/assignment_grade_seekBar"
+                android:focusable="false" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:id="@+id/completed_switch" />
+
+
         </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

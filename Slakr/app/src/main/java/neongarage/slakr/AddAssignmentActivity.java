@@ -23,6 +23,7 @@ public class AddAssignmentActivity extends ActionBarActivity{
     private EditText assignmentGrade;
     private Spinner assignmentSpinner;
     private EditText assignmentWeight;
+    private Spinner assignmentCompleted;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +69,11 @@ public class AddAssignmentActivity extends ActionBarActivity{
         assignmentGrade  =  (EditText)findViewById(R.id.assignmentGrade);
         assignmentWeight = (EditText) findViewById(R.id.assignmentWeight);
         assignmentSpinner = (Spinner)findViewById(R.id.assignmentSpinner);
+        assignmentCompleted = (Spinner) findViewById(R.id.assignmentCompleted);
         returnIntent.putExtra("item_name", assignmentName.getText().toString());
         returnIntent.putExtra("item_grade", assignmentGrade.getText().toString());
         returnIntent.putExtra("item_weight", assignmentWeight.getText().toString());
+        returnIntent.putExtra("item_completed", assignmentCompleted.getSelectedItem().toString());
         returnIntent.putExtra("item_type", assignmentSpinner.getSelectedItem().toString());
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
         returnIntent.putExtra("item_date", date);

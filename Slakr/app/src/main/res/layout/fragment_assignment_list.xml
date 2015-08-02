@@ -1,23 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/add_course"
+    android:orientation="vertical"
     tools:context=".MainActivity$CourseDetail">
 
     <ListView
         android:id="@android:id/list"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_height="420dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/button_bar">
     </ListView>
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="+"
-        android:textSize="50dp"
-        android:onClick="addAssignment"
-        android:layout_gravity="right|bottom" />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:weightSum="1"
+        android:background="?android:attr/colorPrimary"
+        android:id="@+id/button_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_weight="0.90"
+            android:indeterminate="false"
+            android:layout_below="@+id/grade_I_want"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/grade_I_want" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingLeft="10dp"
+            android:text="Grade I want"
+            android:id="@+id/grade_I_want" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="+"
+            android:textSize="50dp"
+            android:padding="10dp"
+            android:onClick="addAssignment"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="78%"
+            android:textColor="@android:color/white"
+            android:id="@+id/desired_grade"
+            android:layout_below="@+id/grade_I_want"
+            android:layout_toEndOf="@+id/seekBar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="YOU NEED"
+            android:textColor="@android:color/white"
+            android:id="@+id/you_need"
+            android:layout_above="@+id/desired_grade"
+            android:layout_toStartOf="@+id/button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="99%"
+            android:textColor="@android:color/white"
+            android:textSize="32dp"
+            android:id="@+id/grade_needed"
+            android:layout_alignBottom="@+id/seekBar"
+            android:layout_alignStart="@+id/you_need"
+            android:layout_toStartOf="@+id/button" />
+
+    </RelativeLayout>
 
 
-</FrameLayout>
+
+</RelativeLayout>

@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -69,6 +70,22 @@ public class CourseSummaryActivity extends ActionBarActivity {
         course_list.getBackground().setColorFilter(0xFF37474f, PorterDuff.Mode.MULTIPLY);
         course_list.setTextColor(Color.WHITE);
 
+        SeekBar gradeSeekBar = (SeekBar) findViewById(R.id.desired_grade_seekbar);
+        final TextView desiredGrade = (TextView) findViewById(R.id.desired_grade);
+        gradeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                progress = progresValue;
+            }@Override
+             public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                desiredGrade.setText("Desired Grade: " +progress +'%');
+            }
+        });
         setCurrentGrade();
     }
 
@@ -134,6 +151,14 @@ public class CourseSummaryActivity extends ActionBarActivity {
         earnedRenderer.setFillPoints(true);
         earnedRenderer.setLineWidth(2);
         earnedRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+
+        multiRenderer.setXLabels(0);
+        for(int i = 0; i<mAssignments.size(); i++){
+            multiRenderer.addXTextLabel(i, mAssignments.get(i).getName());
+
+        }
 
         // Creating XYSeriesRenderer to customize expenseSeries
         XYSeriesRenderer totalRenderer = new XYSeriesRenderer();
@@ -141,12 +166,7 @@ public class CourseSummaryActivity extends ActionBarActivity {
         totalRenderer.setFillPoints(true);
         totalRenderer.setLineWidth(2);
         totalRenderer.setDisplayChartValues(true);
-        // Creating a XYMultipleSeriesRenderer to customize the whole chart
-        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-        for(int i = 0; i<mAssignments.size(); i++){
-            multiRenderer.addXTextLabel(i, mAssignments.get(i).getName());
 
-        }
 
         // Adding incomeRenderer and expenseRenderer to multipleRenderer
         // Note: The order of adding dataseries to dataset and renderers to multipleRenderer
@@ -157,6 +177,8 @@ public class CourseSummaryActivity extends ActionBarActivity {
         multiRenderer.setMarginsColor(Color.WHITE);
         multiRenderer.setYAxisMin(0);
         multiRenderer.setYAxisMax(maxWeight);
+        multiRenderer.setXAxisMin(-1);
+        multiRenderer.setLabelsTextSize(20);
 
         // Creating an intent to plot bar chart using dataset and multipleRenderer
         LinearLayout layout = (LinearLayout) findViewById(R.id.chart_layout);
@@ -190,8 +212,7 @@ public class CourseSummaryActivity extends ActionBarActivity {
 
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         dataset.addSeries(earnedSeries);
-       dataset.addSeries(passingLine);
-
+        dataset.addSeries(passingLine);
         // Creating XYSeriesRenderer to customize incomeSeries
         XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
         incomeRenderer.setColor(Color.rgb(55,126,184));
@@ -208,6 +229,8 @@ public class CourseSummaryActivity extends ActionBarActivity {
         // Creating a XYMultipleSeriesRenderer to customize the whole chart
 
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        multiRenderer.setXLabels(0);
+
         for(int i = 0; i<mAssignments.size(); i++){
             multiRenderer.addXTextLabel(i, mAssignments.get(i).getName());
 
@@ -281,7 +304,7 @@ public class CourseSummaryActivity extends ActionBarActivity {
         double total_grade_earned = 0;
         for(int i = 0 ;i<mAssignments.size();i++){
             double temp = mAssignments.get(i).getWeight() * mAssignments.get(i).getGrade() *.01;
-            code.add(mAssignments.get(i).getName() + ' ' + temp + '/' + mAssignments.get(i).getWeight());
+            code.add(mAssignments.get(i).getType() + ' ' + temp + '/' + mAssignments.get(i).getWeight());
    //         code.add(mAssignments.get(i).getName() + ' ' + mAssignments.get(i).getWeight());
         }
         DecimalFormat twoDForm = new DecimalFormat("#.##");
@@ -291,16 +314,15 @@ public class CourseSummaryActivity extends ActionBarActivity {
 
         for(int i=0 ;i < mAssignments.size()+1;i++){
             // Adding a slice with its values and name to the Pie Chart
-            distributionSeries.add(code.get(i), distribution.get(i));
+                distributionSeries.add(code.get(i), distribution.get(i));
+
         }
 
-
-
-        defaultRenderer.setLabelsTextSize(30);
+        defaultRenderer.setLabelsTextSize(18);
         defaultRenderer.setShowAxes(true);
         defaultRenderer.setFitLegend(true);
         defaultRenderer.setShowLegend(true);
-        defaultRenderer.setLegendTextSize(40);
+        defaultRenderer.setLegendTextSize(18);
         defaultRenderer.setLabelsColor(Color.BLACK);
         defaultRenderer.setZoomButtonsVisible(false);
         defaultRenderer.setPanEnabled(false);
