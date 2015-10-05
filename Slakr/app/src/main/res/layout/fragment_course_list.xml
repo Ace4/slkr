@@ -5,18 +5,26 @@
     android:id="@+id/add_course"
     tools:context=".MainActivity$CourseList">
 
-    <ListView
-        android:id="@android:id/list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    </ListView>
+        android:layout_width="match_parent"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
 
     <Button
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:text="+"
         android:textSize="50dp"
+        android:padding="10dp"
         android:onClick="addCourse"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:elevation="20dp"
+        android:id="@+id/button"
         android:layout_gravity="right|bottom" />
 
 
