@@ -18,37 +18,37 @@
         </activity>
 
         <activity
-            android:name=".CourseListActivity"
+            android:name=".Course.CourseListActivity"
             android:label="@string/course_list"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity
-            android:name=".AddCourseActivity"
+            android:name=".Course.AddCourseActivity"
             android:label="@string/add_course"
-            android:parentActivityName=".CourseListActivity">
+            android:parentActivityName=".Course.CourseListActivity">
         </activity>
         <activity
             android:label="Course Summary"
-            android:parentActivityName=".CourseListActivity"
-            android:name=".CourseSummaryActivity">
+            android:parentActivityName=".Course.CourseListActivity"
+            android:name=".Course.CourseSummaryActivity">
          </activity>
     <activity android:name="org.achartengine.GraphicalActivity" />
 
         <activity
-            android:name=".AddAssignmentActivity"
+            android:name=".Assignment.AddAssignmentActivity"
             android:label="@string/add_assignment"
-            android:parentActivityName=".AssignmentListActivity">
+            android:parentActivityName=".Assignment.AssignmentListActivity">
         </activity>
 
         <activity
             android:name=".AddGradesActivity"
             android:label="@string/add_course"
-            android:parentActivityName=".AssignmentListActivity">
+            android:parentActivityName=".Assignment.AssignmentListActivity">
         </activity>
         <activity
-            android:name=".AssignmentListActivity"
+            android:name=".Assignment.AssignmentListActivity"
             android:label="@string/course_details"
-            android:parentActivityName=".CourseListActivity">
+            android:parentActivityName=".Course.CourseListActivity">
         </activity>
     </application>
 

@@ -1,22 +1,15 @@
-package neongarage.slakr;
+package neongarage.slakr.Course;
 
 /**
  * Created by Aaron on 1/22/2015.
  */
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import neongarage.slakr.R;
 
 public class AddCourseFragment extends Fragment {
     private View view;

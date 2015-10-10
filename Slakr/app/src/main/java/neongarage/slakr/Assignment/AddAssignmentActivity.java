@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Assignment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import neongarage.slakr.R;
 
 /**
  * Created by Aaron on 1/28/2015.

@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Course;
 
 /**
  * Created by Aaron on 1/22/2015.
@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import neongarage.slakr.MySQLiteHelper;
+import neongarage.slakr.R;
 
 public class CourseListFragment extends Fragment {
     private RecyclerView mRecyclerView;

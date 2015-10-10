@@ -1,14 +1,13 @@
-package neongarage.slakr;
+package neongarage.slakr.Course;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.List;
+import neongarage.slakr.R;
 
 /**
  * Created by Aaron on 1/22/2015.
