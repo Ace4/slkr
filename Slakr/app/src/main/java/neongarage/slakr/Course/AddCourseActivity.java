@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Course;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import neongarage.slakr.R;
 
 /**
  * Created by Aaron on 1/28/2015.

@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import neongarage.slakr.Course.CourseListActivity;
+
 
 public class MainActivity extends ActionBarActivity {
 

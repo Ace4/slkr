@@ -10,6 +10,9 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
+import neongarage.slakr.Assignment.Assignment;
+import neongarage.slakr.Course.Course;
+
 /**
  * Created by Sean on 4/8/2015.
  */

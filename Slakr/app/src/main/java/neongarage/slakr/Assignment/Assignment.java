@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Assignment;
 
 import android.os.Parcel;
 import android.os.Parcelable;

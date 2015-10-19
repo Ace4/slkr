@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Course;
 
 /**
  * Created by Aaron on 4/10/2015.
@@ -14,29 +14,26 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import neongarage.slakr.Assignment.Assignment;
+import neongarage.slakr.Assignment.AssignmentListActivity;
+import neongarage.slakr.MySQLiteHelper;
+import neongarage.slakr.R;
 
 public class CourseSummaryActivity extends ActionBarActivity {
 

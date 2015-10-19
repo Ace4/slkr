@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Assignment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import neongarage.slakr.Course.Course;
+import neongarage.slakr.Assignment.AddAssignmentActivity;
+import neongarage.slakr.MySQLiteHelper;
+import neongarage.slakr.R;
 
 /**
  * Created by Aaron on 1/28/2015.
@@ -40,7 +45,7 @@ public class AssignmentListActivity extends ActionBarActivity{
     }
 
     public void addAssignment(View view) {
-        Intent intent = new Intent(this,AddAssignmentActivity.class);
+        Intent intent = new Intent(this, AddAssignmentActivity.class);
         startActivityForResult(intent, NEW_ASSIGNMENT_REQUEST);
        }
 

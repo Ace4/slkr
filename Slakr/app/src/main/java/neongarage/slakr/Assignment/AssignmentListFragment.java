@@ -1,20 +1,21 @@
-package neongarage.slakr;
+package neongarage.slakr.Assignment;
 
 /**
  * Created by Aaron on 1/22/2015.
  */
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -25,39 +26,102 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class AssignmentListFragment extends ListFragment {
-    private ListView assignmentListView;
+import neongarage.slakr.AddGradesActivity;
+import neongarage.slakr.Course.Course;
+import neongarage.slakr.Course.CourseAdapter;
+import neongarage.slakr.MySQLiteHelper;
+import neongarage.slakr.R;
+
+public class AssignmentListFragment extends Fragment {
+    private RecyclerView mAssignmentRecyclerView;
+    private AssignmentAdapter assignmentAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private List<Assignment> assignments = new ArrayList<Assignment>();
     private MySQLiteHelper db;
 
     private String itemGrade;
     private String itemName;
-    private AssignmentAdapter assignmentAdapter;
     private long id;
     private static int UPDATE_GRADE_REQUEST = 1;
     private static int NEW_ASSIGNMENT_REQUEST = 2;
-    private  Course c;
+    private Course c;
     //The data to show
     List<Map<String, String>> coursesList = new ArrayList<Map<String, String>>();
     private View view;
+
+    private static final String TAG = "RecyclerViewFragment";
+    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
+    private static final int SPAN_COUNT = 2;
+    private enum LayoutManagerType {
+        GRID_LAYOUT_MANAGER,
+        LINEAR_LAYOUT_MANAGER
+    }
+
+    protected LayoutManagerType mCurrentLayoutManagerType;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        view = inflater.inflate(R.layout.fragment_assignment_list, container, false);
+
+
+        if (savedInstanceState != null) {
+            // Restore saved layout manager type.
+            mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
+                    .getSerializable(KEY_LAYOUT_MANAGER);
+        }
+
+        c = (Course) getActivity().getIntent().getParcelableExtra("course");
+        db = new MySQLiteHelper(getActivity());
+        assignments = db.getAssignmentsForCourse(c);
+
+        mAssignmentRecyclerView =  (RecyclerView) view.findViewById(R.id.my_assignment_recycler_view);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+
+        if (savedInstanceState != null) {
+            // Restore saved layout manager type.
+            mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
+                    .getSerializable(KEY_LAYOUT_MANAGER);
+        }
+        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+        assignmentAdapter = new AssignmentAdapter(assignments);
+        mAssignmentRecyclerView.setAdapter(assignmentAdapter);
        return view;
     }
 
+    public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
+        int scrollPosition = 0;
+
+        // If a layout manager has already been set, get current scroll position.
+        if (mAssignmentRecyclerView.getLayoutManager() != null) {
+            scrollPosition = ((LinearLayoutManager) mAssignmentRecyclerView.getLayoutManager())
+                    .findFirstCompletelyVisibleItemPosition();
+        }
+
+        switch (layoutManagerType) {
+            case GRID_LAYOUT_MANAGER:
+                mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
+                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
+                break;
+            case LINEAR_LAYOUT_MANAGER:
+            default:
+                mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                break;
+        }
+
+        mAssignmentRecyclerView.setLayoutManager(mLayoutManager);
+        mAssignmentRecyclerView.scrollToPosition(scrollPosition);
+        mAssignmentRecyclerView.getItemAnimator();
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-       c = (Course) getActivity().getIntent().getParcelableExtra("course");
-       db = new MySQLiteHelper(getActivity());
-       assignments = db.getAssignmentsForCourse(c);
-       assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
-       setListAdapter(assignmentAdapter);
 
         SeekBar gradeSeekBar = (SeekBar) view.findViewById(R.id.seekBar);
         final TextView newGrade = (TextView) view.findViewById(R.id.desired_grade);
@@ -78,7 +142,7 @@ public class AssignmentListFragment extends ListFragment {
 
     }
 
-        @Override
+ /*   @Override
     public void onListItemClick(ListView l, View v, int position, long click_id) {
         id = click_id;
         Log.i("FragmentList", "Item clicked: " + id);
@@ -87,6 +151,7 @@ public class AssignmentListFragment extends ListFragment {
         intent.putExtra("click_id", id);
         startActivityForResult(intent, UPDATE_GRADE_REQUEST);
     }
+*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,8 +185,7 @@ public class AssignmentListFragment extends ListFragment {
         String date = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
         db.addAssignment(assignment, c.getDept(), c.getNum());
         assignments.add(assignment);
-        assignmentAdapter = new AssignmentAdapter(getActivity(), R.layout.row_add_assignment, assignments);
-        assignmentAdapter.notifyDataSetChanged();
+        assignmentAdapter.notifyItemInserted(assignments.size()-1);
     }
 
     private void addGrade(String grade, long id){

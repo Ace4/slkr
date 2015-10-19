@@ -1,4 +1,4 @@
-package neongarage.slakr;
+package neongarage.slakr.Assignment;
 
 /**
  * Created by Aaron on 1/22/2015.
@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import neongarage.slakr.R;
+
 public class AddAssignmentFragment extends Fragment {
     private View view;
     private TextView weightTextView;
@@ -34,24 +36,7 @@ public class AddAssignmentFragment extends Fragment {
         setSpinnerContent(view);
         setCompletedContent(view);
 
-/*        weightTextView = (TextView) view.findViewById(R.id.WeighTextView);
-        weight = (SeekBar) view.findViewById(R.id.assignmentWeightSeekBar);
-        // Initialize the textview with '0'.
-        weightTextView.setText("Weight: " + weight.getProgress() + "/" + weight.getMax());
 
-        weight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress = 0;
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                progress = progresValue;
-            }@Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-             }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                weightTextView.setText("Weight: " + progress + "/" + seekBar.getMax());
-            }
-        }); */
         return view;
     }
 
